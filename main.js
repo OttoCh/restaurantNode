@@ -17,15 +17,32 @@ app.set('view engine', '.hbs')
 
 //mysql
 var con = mysql.createConnection({
-    host: 'localhost'
-    user: 
+    host: 'localhost',
+    user: "otto",
+    password: "langsung"
 })
 
-app.get('/', (req, res) => 
+con.connect(function(err) {
+    if(err) throw err;
+    console.log("connected");
+})
 
-
+app.get('/', (req, res) => {
     res.render('home', {
         name: 'otto'
+    })
+})
+
+app.get('/create', (req, res) => {
+    res.render("create_restaurant", {})
+})
+
+app.post('/create', (req,res) => {
+    //insert ke database (json)
+
+    
+    res.render("create_restaurant", {
+        post: "1"
     })
 })
 
