@@ -1,10 +1,12 @@
 //the main script for server
+http = require('http')
 portNumb = 1775
 
 const path = require('path')
 const express = require('express')
 const exhbs = require('express-handlebars')
 const mysql = require('mysql')
+const bodyParser = require('body-parser')
 
 const app = express()
 
@@ -14,6 +16,9 @@ app.engine('.hbs', exhbs({
     layoutsDir: path.join(__dirname, 'views/layouts')
 }))
 app.set('view engine', '.hbs')
+
+//app.use(bodyParser.json())
+app.use(bodyParser.urlencoded())
 
 //mysql
 var con = mysql.createConnection({
@@ -38,9 +43,18 @@ app.get('/create', (req, res) => {
 })
 
 app.post('/create', (req,res) => {
-    //insert ke database (json)
-
-    
+    //insert ke database (urlencoded)
+    console.log("post")
+    var sql = "INSERT INTO restaurant_list (name) VALUES ?"
+    console.log(req)
+    var value = [req.body.restaurant_name]
+    console.log(value)
+    if(value[0] != undefined) {
+        con.query(sql, [value], (err, result) => {
+            if(err) throw err;
+            console.log("Number of record inserted: " + result.affectedRows);
+        })
+    }
     res.render("create_restaurant", {
         post: "1"
     })
