@@ -1,9 +1,10 @@
-<!--<form enctype="application/json" method="post"> -->
-<form enctype="multipart/form-data" method="post">
-    Restaurant Name: <br>
-    <input type="text" name="restaurant_name"> <br>
-    <input type="submit" value="create"> <br>
-    {{#if post}}
-        <h2>restaurant created </h2> 
-    {{/if}}
+<!-- <form enctype="application/json" method="post"> -->
+<form enctype="application/x-www-form-urlencoded" method="post">
+        Restaurant Name: <br>
+        <input type="text" name="restaurant_name"> <br>
+        <input type="submit" value="create"> <br>
+        {{#if post}}
+            <h2>restaurant created </h2> 
+        {{/if}}
 </form>
+

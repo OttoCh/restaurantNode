@@ -24,7 +24,8 @@ app.use(bodyParser.urlencoded())
 var con = mysql.createConnection({
     host: 'localhost',
     user: "otto",
-    password: "langsung"
+    password: "langsung",
+    database: "restaurant"
 })
 
 con.connect(function(err) {
@@ -44,13 +45,11 @@ app.get('/create', (req, res) => {
 
 app.post('/create', (req,res) => {
     //insert ke database (urlencoded)
-    console.log("post")
-    var sql = "INSERT INTO restaurant_list (name) VALUES ?"
-    console.log(req)
-    var value = [req.body.restaurant_name]
-    console.log(value)
-    if(value[0] != undefined) {
-        con.query(sql, [value], (err, result) => {
+    var value = req.body.restaurant_name
+    var sql = "INSERT INTO restaurant_list (name) VALUES "
+    sql += "('" + value + "');"
+    if(value != undefined) {
+        con.query(sql, (err, result) => {
             if(err) throw err;
             console.log("Number of record inserted: " + result.affectedRows);
         })
