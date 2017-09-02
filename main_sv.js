@@ -7,6 +7,8 @@ const express = require('express')
 const exhbs = require('express-handlebars')
 const mysql = require('mysql')
 const bodyParser = require('body-parser')
+const restaurant_tablename = "restaurant_list"
+const menu_tablename = "menu_list"
 
 const app = express()
 
@@ -48,7 +50,7 @@ app.route('/create')
     console.log(req.url)
     var restaurant_name_value = req.body.restaurant_name
     var owner_value = req.body.owner
-    var sql = "INSERT INTO restaurant_list (name, owner) VALUES "
+    var sql = "INSERT INTO " + restaurant_tablename + " (name, owner) VALUES "
     sql += "('" + restaurant_name_value + "','" + owner_value + "');"
     if(restaurant_name_value != undefined && owner_value != undefined) {
         con.query(sql, (err, result) => {
@@ -65,12 +67,36 @@ app.route('/brew/:id')
 .get((req,res, next) => {
     //res.render("brew_menu", {})
     var restaurant_id = req.params.id
-    console.log("brew " + restaurant_id)
+    var sql = "SELECT name from " + restaurant_tablename + " WHERE id=" + restaurant_id
+    //console.log("brew " + restaurant_id)
+    con.query(sql, (err, result, fields) => {
+        if(err) throw err;
+        console.log(result.name)
+        res.render('brew', {
+            restaurant_name: result[0].name
+        })
+    })
+})
+.post((req, res, next) => {
+    var menu_name = req.body.menu_name
+    var menu_price = req.body.menu_price
+    var menu_description = req.body.menu_description
+    var restaurant_id = req.params.id
+    if(menu_name != undefined && menu_price != undefined) {
+        var sql = "INSERT INTO " + menu_tablename + + " (menu_name, menu_price, description, restaurant_id) VALUES ";
+        sql += "('" + menu_name + "'," + menu_price + ",'" + menu_description + "'," + restaurant_id + ");"
+        con.query(sql, (err, result) => {
+            if(err) throw err;
+            res.render('brew', {
+                restaurant_name: "AA"
+            })
+        })
+    }
 })
 
 app.route('/list')
 .get((req, res, next) => {
-    var sql = "SELECT * FROM restaurant_list"
+    var sql = "SELECT * FROM " + restaurant_tablename
     con.query(sql, (err, result, fields) => {
         if(err) throw err;
         /*
