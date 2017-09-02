@@ -18,7 +18,7 @@ app.engine('.hbs', exhbs({
 app.set('view engine', '.hbs')
 
 app.use(bodyParser.json())
-//app.use(bodyParser.urlencoded())
+app.use(bodyParser.urlencoded())
 
 //mysql
 var con = mysql.createConnection({
@@ -61,15 +61,24 @@ app.route('/create')
     })
 })
 
+app.route('/brew/:id')
+.get((req,res, next) => {
+    //res.render("brew_menu", {})
+    var restaurant_id = req.params.id
+    console.log("brew " + restaurant_id)
+})
+
 app.route('/list')
 .get((req, res, next) => {
     var sql = "SELECT * FROM restaurant_list"
     con.query(sql, (err, result, fields) => {
         if(err) throw err;
+        /*
         for(var i=0; i < result.length; i++) {
             var row = result[i]
             console.log(row.name)        
         }
+        */
         res.render('list_restaurant', {
             list: result
         })

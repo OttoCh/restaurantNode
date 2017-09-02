@@ -3,12 +3,17 @@
         <th>ID</th>
         <th>Restaurant Name</th>
         <th>Owner</th>
+        <th></th>
     </tr>
     {{#each list}}
         <tr>
             <th>{{id}}</th>
             <th>{{name}}</th>
             <th>{{owner}}</th>
+            <th>
+                <!-- <a href="/brew?id={{id}}">Make Menu</a> -->
+                <a href="/brew/{{id}}">Make Menu</a>
+            </th>
         </tr>
     {{/each}}
 </table>
