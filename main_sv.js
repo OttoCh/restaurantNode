@@ -45,10 +45,11 @@ app.get('/create', (req, res) => {
 
 app.post('/create', (req,res) => {
     //insert ke database (urlencoded)
-    var value = req.body.restaurant_name
-    var sql = "INSERT INTO restaurant_list (name) VALUES "
-    sql += "('" + value + "');"
-    if(value != undefined) {
+    var restaurant_name_value = req.body.restaurant_name
+    var owner_value = req.body.owner
+    var sql = "INSERT INTO restaurant_list (name, owner) VALUES "
+    sql += "('" + restaurant_name_value + "','" + owner_value + "');"
+    if(restaurant_name_value != undefined && owner_value != undefined) {
         con.query(sql, (err, result) => {
             if(err) throw err;
             console.log("Number of record inserted: " + result.affectedRows);
