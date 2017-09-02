@@ -17,8 +17,8 @@ app.engine('.hbs', exhbs({
 }))
 app.set('view engine', '.hbs')
 
-//app.use(bodyParser.json())
-app.use(bodyParser.urlencoded())
+app.use(bodyParser.json())
+//app.use(bodyParser.urlencoded())
 
 //mysql
 var con = mysql.createConnection({
@@ -35,16 +35,17 @@ con.connect(function(err) {
 
 app.get('/', (req, res) => {
     res.render('home', {
-        name: 'otto'
+        name: 'A'
     })
 })
 
-app.get('/create', (req, res) => {
+app.route('/create')
+.get((req, res, next) => {
     res.render("create_restaurant", {})
 })
-
-app.post('/create', (req,res) => {
+.post((req,res,next) => {
     //insert ke database (urlencoded)
+    console.log(req.url)
     var restaurant_name_value = req.body.restaurant_name
     var owner_value = req.body.owner
     var sql = "INSERT INTO restaurant_list (name, owner) VALUES "
@@ -57,6 +58,21 @@ app.post('/create', (req,res) => {
     }
     res.render("create_restaurant", {
         post: "1"
+    })
+})
+
+app.route('/list')
+.get((req, res, next) => {
+    var sql = "SELECT * FROM restaurant_list"
+    con.query(sql, (err, result, fields) => {
+        if(err) throw err;
+        for(var i=0; i < result.length; i++) {
+            var row = result[i]
+            console.log(row.name)        
+        }
+        res.render('list_restaurant', {
+            list: result
+        })
     })
 })
 
