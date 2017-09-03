@@ -83,17 +83,32 @@ app.route('/brew/:id')
     var menu_description = req.body.menu_description
     var restaurant_id = req.params.id
     if(menu_name != undefined && menu_price != undefined) {
-        var sql = "INSERT INTO " + menu_tablename + + " (menu_name, menu_price, description, restaurant_id) VALUES ";
+        var sql = "INSERT INTO " + menu_tablename + " (menu_name, menu_price, description, restaurant_id) VALUES ";
         sql += "('" + menu_name + "'," + menu_price + ",'" + menu_description + "'," + restaurant_id + ");"
+        var restaurant_name = getRestaurantName(restaurant_id)
+        console.log("restaurant name 3: " + restaurant_name)
         con.query(sql, (err, result) => {
             if(err) throw err;
             res.render('brew', {
-                restaurant_name: "AA"
+                restaurant_name: restaurant_name,
+                post: "1"
             })
         })
     }
 })
-//
+
+function getRestaurantName(restaurant_id) {
+    var sql = "select name from " + restaurant_tablename + " where id=" + restaurant_id;
+    var restaurant_name = ""
+    con.query(sql, (err, res) => {
+        if(err) throw err;
+        console.log("restaurant name 1: " + res[0].name)
+        restaurant_name = res[0].name;
+        return restaurant_name
+    })
+    console.log("restaurant name 2: " + restaurant_name)
+}
+
 app.route('/list')
 .get((req, res, next) => {
     var sql = "SELECT * FROM " + restaurant_tablename
