@@ -1,5 +1,9 @@
 const own = require('./owner.js')
 const mysql = require('mysql')
+<<<<<<< HEAD
+=======
+var _ = require("lodash");
+>>>>>>> 25e04dec81ef59f827518318982ba4965f51a98e
 
 var con = mysql.createConnection({
     host: 'localhost',
