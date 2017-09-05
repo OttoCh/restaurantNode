@@ -10,6 +10,8 @@ const bodyParser = require('body-parser')
 const restaurant_tablename = "restaurant_list"
 const menu_tablename = "menu_list"
 
+const query_owner = require('./Model/query.owner.js')
+
 const app = express()
 
 app.engine('.hbs', exhbs({
@@ -86,6 +88,7 @@ app.route('/brew/:id')
         var sql = "INSERT INTO " + menu_tablename + " (menu_name, menu_price, description, restaurant_id) VALUES ";
         sql += "('" + menu_name + "'," + menu_price + ",'" + menu_description + "'," + restaurant_id + ");"
         getRestaurantName(restaurant_id, (err, restaurant_name)=>{
+            if(err) throw err;
             con.query(sql, (err, result) => {
                 if(err) throw err;
                 res.render('brew', {
@@ -121,6 +124,23 @@ app.route('/list')
         res.render('list_restaurant', {
             list: result
         })
+    })
+})
+
+app.route('/owner')
+.get((req, res, next) => {
+    query_owner.getAllOwner( (err, result)=> {
+        if(err) throw err;
+        for(i=0; i<result.length; i++) {
+            console.log(result[i])
+        }
+    })
+})
+
+app.route('/owner2')
+.get((req,res,next) => {
+    query_owner.getOwnerbyID(1, (err, result)=>{
+        console.log(result)
     })
 })
 
