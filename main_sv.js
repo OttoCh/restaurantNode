@@ -7,6 +7,8 @@ const express = require('express')
 const exhbs = require('express-handlebars')
 const mysql = require('mysql')
 const bodyParser = require('body-parser')
+var session = require('express-session')
+
 const restaurant_tablename = "restaurant_list"
 const menu_tablename = "menu_list"
 
