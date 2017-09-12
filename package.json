@@ -1,0 +1,20 @@
+{
+    "name": "passportTest",
+    "description": "simple authentication system",
+    "version": "1.0.0",
+    "main":"passportTest.js",
+    "scripts":{
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author":"otsukare",
+    "license":"ICS",
+    "dependencies": {
+      "bcryptjs": "*",
+      "connect-flash": "*",
+      "cookie-parser": "1.4.1",
+      "express-messages": "*",
+      "express-validator": "*",
+      "passport-http": "*",
+      "passport-local": "*"
+    }
+  }
