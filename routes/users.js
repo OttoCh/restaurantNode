@@ -24,19 +24,37 @@ router.post('/register', function(req, res) {
     var password2 = req.body.password2
 
     //validation
+    //req.checkBody(['name', 'Name is required'],['email', 'email is required']).notEmpty(); 
     req.checkBody('name', 'Name is required').notEmpty(); 
+    /*
+    req.checkBody('email', 'email is required').isEmail(); 
+    req.checkBody('username', 'username is required').notEmpty(); 
+    req.checkBody('password', 'password is required').notEmpty(); 
+    req.checkBody('password2', 'password does not match').equals(req.body.password)
+    */
     //pastikan agar field name tdk kosong
-
-    //var errors = req.validationErrors();
     
+    //var error = req.getValidationResult();
+
     req.getValidationResult().then(function(result) {
-        console.log(result)
-        if(!result.isEmpty()) {
+        try {
+            result.throw()
+            console.log("no error")
+        }
+        catch (err) {
+            console.log("there is an error")
+        }
+        /*
+        console.log(result.throw())
+        if(result.isEmpty) {
+            //tidak ada error sama sekali
             console.log("no")
         }
         else {
+            //ada error
             console.log("yes")
         }
+        */
     })
     
 
