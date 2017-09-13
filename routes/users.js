@@ -1,6 +1,11 @@
 var express = require('express')
 var router = express.Router()
 
+//users root
+router.get('/', (req, res) => {
+    console.log('get root of users')
+})
+
 //register 
 router.get('/register', function(req,res) {
     res.render('register')
@@ -18,7 +23,23 @@ router.post('/register', function(req, res) {
     var password = req.body.password
     var password2 = req.body.password2
 
-    console.log(name)
+    //validation
+    req.checkBody('name', 'Name is required').notEmpty(); 
+    //pastikan agar field name tdk kosong
+
+    //var errors = req.validationErrors();
+    
+    req.getValidationResult().then(function(result) {
+        console.log(result)
+        if(!result.isEmpty()) {
+            console.log("no")
+        }
+        else {
+            console.log("yes")
+        }
+    })
+    
+
 })
 
 module.exports = router
