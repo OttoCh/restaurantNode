@@ -26,12 +26,12 @@ router.post('/register', function(req, res) {
     //validation
     //req.checkBody(['name', 'Name is required'],['email', 'email is required']).notEmpty(); 
     req.checkBody('name', 'Name is required').notEmpty(); 
-    /*
+    req.checkBody('email', 'email is required').notEmpty(); 
     req.checkBody('email', 'email is required').isEmail(); 
     req.checkBody('username', 'username is required').notEmpty(); 
     req.checkBody('password', 'password is required').notEmpty(); 
     req.checkBody('password2', 'password does not match').equals(req.body.password)
-    */
+    
     //pastikan agar field name tdk kosong
     
     //var error = req.getValidationResult();
@@ -39,6 +39,7 @@ router.post('/register', function(req, res) {
     req.getValidationResult().then(function(result) {
         try {
             result.throw()
+            res.render('register')
             console.log("no error")
         }
         catch (err) {
