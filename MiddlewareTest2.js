@@ -2,10 +2,12 @@
 var express = require('express'),
     router = express.Router(),
     app = express()
-    controller = require('./MiddlewareTest3.js')
+    controller = require('./MiddlewareTest3.js'),
+    middleware = require('./MiddlewareTest4.js')
 
-router.get('/', controller.mid, controller.getIndex)
-
+router.use(middleware)
+router.get('/', controller.mid, controller.mid2, controller.getIndex)
+router.get('/hello', controller.mid2, controller.getIndex)
 /*
 module.exports = {
     idHandler: function(req,res,next) {
