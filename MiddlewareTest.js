@@ -1,9 +1,9 @@
 var express = require('express');
-var middleware = require('./MiddlewareTest3.js')
+var home = require('./MiddlewareTest2.js')
 
 var app = express()
 
-app.use(middleware.idHandler)
+app.use('/:id', home)
 
 /*
 app.get('/:id', function(req, res, next) {

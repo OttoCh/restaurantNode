@@ -1,6 +1,12 @@
-//middleware
-var app = require('express')
+//route
+var express = require('express'),
+    router = express.Router(),
+    app = express()
+    controller = require('./MiddlewareTest3.js')
 
+router.get('/', controller.mid, controller.getIndex)
+
+/*
 module.exports = {
     idHandler: function(req,res,next) {
         if(req.params.id==='0') {
@@ -17,3 +23,6 @@ module.exports = {
         }
     }
 }
+*/
+
+module.exports = router
